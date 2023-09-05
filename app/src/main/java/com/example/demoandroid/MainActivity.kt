@@ -2,7 +2,10 @@ package com.example.demoandroid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatViewInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demoandroid.adapters.EventAdapter
@@ -36,7 +39,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.btnPlus.setOnClickListener {
-            viewModel.increaseCounter()
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Voulez-vous vraiment incrémenter le compteur ?")
+            builder.setPositiveButton("Oui") { _, _ ->
+                viewModel.increaseCounter()
+            }
+            builder.setNegativeButton("Non", null)
+            builder.show()
         }
 
         binding.btnMinus.setOnClickListener {
@@ -46,7 +55,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setRv() {
         binding.rvMainActivity.layoutManager = LinearLayoutManager(this)
-        adapter = EventAdapter()
+        adapter = EventAdapter {
+            Log.d("Main activyt", it)
+        }
         binding.rvMainActivity.adapter = adapter
     }
 

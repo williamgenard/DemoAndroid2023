@@ -1,5 +1,6 @@
 package com.example.demoandroid.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.demoandroid.R
 
-class EventAdapter : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
+class EventAdapter(private val onClickListener : (String) -> Unit) : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
     private val events : MutableList<String> = mutableListOf()
 
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
@@ -23,6 +24,9 @@ class EventAdapter : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: EventAdapter.ViewHolder, position: Int) {
         val event = events[position]
         holder.tvEvent.text = event
+        holder.itemView.setOnClickListener {
+            onClickListener(event)
+        }
     }
 
     override fun getItemCount(): Int {
