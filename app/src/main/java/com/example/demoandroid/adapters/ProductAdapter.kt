@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class ProductAdapter(private val productEventListener: ProductEventListener) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     interface ProductEventListener {
         fun onDelete(position : Int)
-        fun onEdit()
+        fun onEdit(product : Product, position : Int)
     }
 
     private var products : List<Product> = mutableListOf()
@@ -36,6 +36,9 @@ class ProductAdapter(private val productEventListener: ProductEventListener) : R
         holder.tvProduct.text = name
         holder.btnDelete.setOnClickListener {
             productEventListener.onDelete(position)
+        }
+        holder.itemView.setOnClickListener {
+            productEventListener.onEdit(product, position)
         }
     }
 

@@ -23,4 +23,10 @@ class MainViewModel : ViewModel() {
         newValue.removeAt(position)
         _products.value = newValue
     }
+
+    fun updateProduct(product: Product, position: Int) {
+        val newValue = _products.value!!.toMutableList()
+        newValue[position] = product
+        _products.value = newValue
+    }
 }

@@ -1,7 +1,9 @@
 package com.example.demoandroid
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,22 @@ class MainActivity : AppCompatActivity(), ProductAdapter.ProductEventListener {
     private val viewModel : MainViewModel by viewModels()
 
     private lateinit var adater : ProductAdapter
+
+    private val startForResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == RESULT_OK) {
+            val product = it.data?.getSerializableExtra(EditProductActivity.PRODUCT_TAG) as Product
+            val position = it.data?.getIntExtra(EditProductActivity.POSITION_TAG, -1)
+            if (position != -1 && position != null) {
+                viewModel.updateProduct(
+                    product,
+                    position
+                )
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -58,7 +76,10 @@ class MainActivity : AppCompatActivity(), ProductAdapter.ProductEventListener {
         builder.show()
     }
 
-    override fun onEdit() {
-        TODO("Not yet implemented")
+    override fun onEdit(product : Product, position : Int) {
+        val intent = Intent(this, EditProductActivity::class.java)
+        intent.putExtra(EditProductActivity.PRODUCT_TAG, product)
+        intent.putExtra(EditProductActivity.POSITION_TAG, position)
+        startForResult.launch(intent)
     }
 }
