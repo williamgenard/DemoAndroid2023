@@ -6,10 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.demoandroid.databinding.FragmentFirstBinding
 
 class FirstFragment : Fragment() {
+
+    private val viewModel : MainViewModel by activityViewModels()
 
     private var _binding : FragmentFirstBinding? = null
     private val binding : FragmentFirstBinding
@@ -23,7 +26,12 @@ class FirstFragment : Fragment() {
         binding.btnGoToSecond.setOnClickListener {
             // Besoin de requireContext pour récupérer le contexte
             val builder = AlertDialog.Builder(requireContext())
+            viewModel.increaseCounter()
             findNavController().navigate(R.id.action_firstFragment_to_secondFragment)
+        }
+
+        viewModel.actionCounter.observe(viewLifecycleOwner) {
+            binding.tvCounterFirstFragment.text = it.toString()
         }
         // Inflate the layout for this fragment
         return binding.root
