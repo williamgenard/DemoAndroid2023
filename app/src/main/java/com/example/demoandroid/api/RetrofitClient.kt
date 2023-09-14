@@ -13,17 +13,17 @@ class RequestInterceptor(context: Context) : Interceptor {
     private val tokenManager : TokenManager = TokenManager(context)
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request = chain.request().newBuilder()
+        val requestBuilder = chain.request().newBuilder()
 
         val token = tokenManager.getAuthToken()
 
         if (token != null) {
-            request.addHeader(
+            requestBuilder.addHeader(
                 "Authorization", "Bearer $token"
             )
         }
 
-        return chain.proceed(request.build())
+        return chain.proceed(requestBuilder.build())
     }
 
 }

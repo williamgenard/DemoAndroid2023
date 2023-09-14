@@ -7,4 +7,38 @@
     tools:context=".ui.main.MainActivity">
 
 
+    <Button
+        android:id="@+id/btn_test_permit_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permit all"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_test_authenticated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Authenticated"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_test_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Admin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_message_main_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_test_authenticated" />
 </androidx.constraintlayout.widget.ConstraintLayout>
